@@ -45,6 +45,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/user", "/api/user/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/user/vertify/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers( "/api/post").permitAll()
+                        .requestMatchers("/api/category").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

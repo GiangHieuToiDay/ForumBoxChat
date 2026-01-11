@@ -161,5 +161,12 @@ public class UserServiceImpl implements UserService {
         return "Xác thực thành công! Giờ m có thể đăng nhập.";
     }
 
+    @Override
+    public UserDtoRespone getUser(UUID token) {
+        User user = userRepository.findById(token)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        return userMapper.toResponse(user);
+    }
+
 
 }

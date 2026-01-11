@@ -13,7 +13,11 @@ public enum ErrorCode {
     CANOT_CREATE_TOKEN(1010, "Can not create token jwt"),
     CANOT_SEND_EMAIL(1011, "Can not send email"),
     TOKEN_NOT_FOUND(1012, "Token not found"),
-    TOKEN_EXPIRED(1013, "Token expired");
+    TOKEN_EXPIRED(1013, "Token expired"),
+    POST_IS_EMPTY(1014, "Post is empty"),
+    POST_NOT_FOUND(1015, "Post not found"),
+    CATEGORY_NOT_FOUND(1016, "Category not found"),
+    CATEGORY_NAME_IS_EXIST(1017, "Category name already exists");
 
     private final int code;
     private final String message;

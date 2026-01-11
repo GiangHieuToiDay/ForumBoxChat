@@ -15,4 +15,5 @@ public interface UserService {
     UserDtoRespone updateUser(UserDtoRequest userDtoRequest);
     void deleteUser(UUID uuid);
     String verifyAccount(UUID token);
+    UserDtoRespone getUser(UUID token);
 }
