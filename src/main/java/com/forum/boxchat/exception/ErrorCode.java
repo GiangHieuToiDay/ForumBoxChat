@@ -17,7 +17,9 @@ public enum ErrorCode {
     POST_IS_EMPTY(1014, "Post is empty"),
     POST_NOT_FOUND(1015, "Post not found"),
     CATEGORY_NOT_FOUND(1016, "Category not found"),
-    CATEGORY_NAME_IS_EXIST(1017, "Category name already exists");
+    CATEGORY_NAME_IS_EXIST(1017, "Category name already exists"),
+    COMMENT_NOT_FOUND(1018, "Comment not found"),
+    COMMENT_NOT_BY_USER(1019, "Comment not by user");
 
     private final int code;
     private final String message;

@@ -16,7 +16,7 @@ public interface PostService {
 
     PostDtoResponse findPostById(int id);
 
-    PostDtoResponse findPostByTitle(String title);
+    List<PostDtoResponse> findPostByTitle(String title);
 
     //CREATE
     PostDtoResponse createPost(PostDtoRequest postDtoRequest);

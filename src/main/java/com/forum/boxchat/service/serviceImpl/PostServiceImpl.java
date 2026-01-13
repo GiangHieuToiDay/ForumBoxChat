@@ -55,11 +55,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDtoResponse findPostByTitle(String title) {
-        Post post = postRepository.findPostByTitle(title)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+    public List<PostDtoResponse> findPostByTitle(String title) {
+        List<Post> posts = postRepository.findPostByTitle(title)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_IS_EMPTY));
 
-        return postMapper.toResponse(post);
+        return posts.stream()
+                .map(postMapper :: toResponse)
+                .toList();
     }
 
     @Override

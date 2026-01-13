@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userDtoRequest));
     }
 
-    @PreAuthorize("(hasRole('USER') and hasRole('VERIFIED')) or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID uuid) {
         userService.deleteUser(uuid);
