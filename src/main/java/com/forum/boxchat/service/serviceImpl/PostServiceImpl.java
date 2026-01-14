@@ -72,12 +72,11 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findById(uuid)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        log.info(user.toString());
+
 
         Category category = categoryRepository.findById(postDtoRequest.getCategoryId())
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
 
-        log.info(category.toString());
 
         Post post = postMapper.toEntity(postDtoRequest);
 

@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
         if (users.isEmpty()) {
             throw new AppException(ErrorCode.USER_LIST_EMPTY);
         }
-        log.info("Users found: {}", users);
 
         return users.stream()
                 .map(userMapper::toResponse)

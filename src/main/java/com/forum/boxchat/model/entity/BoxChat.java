@@ -28,10 +28,15 @@ public class BoxChat {
     @Column(name = "type", nullable = false)
     private BoxChatType type;
 
-    @OneToMany(mappedBy = "boxChat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User createdBy;
+
+
+    @OneToMany(mappedBy = "boxChat", cascade = CascadeType.ALL)
     private List<BoxParticipant> participants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boxChat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "boxChat", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
 }
 

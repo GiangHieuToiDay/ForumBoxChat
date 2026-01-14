@@ -19,7 +19,10 @@ public enum ErrorCode {
     CATEGORY_NOT_FOUND(1016, "Category not found"),
     CATEGORY_NAME_IS_EXIST(1017, "Category name already exists"),
     COMMENT_NOT_FOUND(1018, "Comment not found"),
-    COMMENT_NOT_BY_USER(1019, "Comment not by user");
+    COMMENT_NOT_BY_USER(1019, "Comment not by user"),
+    BOX_CHAT_NOT_FOUND(1020, "Box chat not found"),
+    TYPE_NOT_FOUND(1021, "Type not found"),
+    YOU_NOT_HAVE_AUTHOR_TO_DO_ACTION(1022, "You canot do action");
 
     private final int code;
     private final String message;

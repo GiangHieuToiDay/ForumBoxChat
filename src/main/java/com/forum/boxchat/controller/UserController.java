@@ -28,8 +28,6 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDtoRespone>> getUsers() {
-        var authentication =  SecurityContextHolder.getContext().getAuthentication();
-        log.info("Username is {}", authentication.getName());
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
