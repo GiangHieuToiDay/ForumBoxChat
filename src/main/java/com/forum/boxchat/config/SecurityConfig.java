@@ -114,6 +114,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/user/vertify/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/category/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
@@ -141,6 +142,19 @@ public class SecurityConfig {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+        configuration.addAllowedOriginPattern("*"); // Cho phép tất cả, hoặc chỉ định rõ http://127.0.0.1:5500
+        configuration.addAllowedMethod("*"); // Cho phép GET, POST, PUT, DELETE...
+        configuration.addAllowedHeader("*"); // Cho phép tất cả các header (Content-Type, Authorization...)
+        configuration.setAllowCredentials(true);// Bắt buộc là true để nhận Cookie
+
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

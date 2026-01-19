@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Service
+
 public interface UserService {
     List<UserDtoRespone> findAllUsers();
     UserDtoRespone createUser(UserDtoRequest userDtoRequest);

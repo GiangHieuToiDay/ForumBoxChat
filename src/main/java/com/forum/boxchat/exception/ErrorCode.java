@@ -22,7 +22,10 @@ public enum ErrorCode {
     COMMENT_NOT_BY_USER(1019, "Comment not by user"),
     BOX_CHAT_NOT_FOUND(1020, "Box chat not found"),
     TYPE_NOT_FOUND(1021, "Type not found"),
-    YOU_NOT_HAVE_AUTHOR_TO_DO_ACTION(1022, "You canot do action");
+    YOU_NOT_HAVE_AUTHOR_TO_DO_ACTION(1022, "You canot do action"),
+    NOT_FOUND_BOX_PARTICIPANT (1023, "Box participant not found"),
+    USER_ALREADY_IN_BOX (1024, "User is already in box"),
+    USER_NOT_FOUND_IN_BOX (1025, "User not found in box");
 
     private final int code;
     private final String message;
