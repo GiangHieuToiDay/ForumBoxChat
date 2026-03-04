@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface PostMapper {
 
     @Mapping(source = "user.name", target = "authorName")
+    @Mapping(source = "user.id", target = "authorId")
     @Mapping(source = "category.name", target = "categoryName")
     @Mapping(target = "commentCount", expression = "java(post.getComments() != null ? post.getComments().size() : 0)")
     PostDtoResponse toResponse(Post post);

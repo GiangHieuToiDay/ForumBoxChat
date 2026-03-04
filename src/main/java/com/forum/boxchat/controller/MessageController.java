@@ -19,17 +19,14 @@ public class MessageController {
 
     @PostMapping
     public MessageDtoResponse sendMessage(
-            @Valid @RequestBody MessageDtoRequest request
-    ) {
+            @Valid @RequestBody MessageDtoRequest request) {
         return messageService.sendMessage(request);
     }
 
     @GetMapping("/box/{boxId}")
     public Page<MessageDtoResponse> getMessages(
             @PathVariable int boxId,
-            Pageable pageable
-    ) {
+            Pageable pageable) {
         return messageService.getMessagesByBox(boxId, pageable);
     }
 }
-

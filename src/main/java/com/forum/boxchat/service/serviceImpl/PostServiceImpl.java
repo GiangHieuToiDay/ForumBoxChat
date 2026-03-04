@@ -113,11 +113,20 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
+    @Override
+    public List<PostDtoResponse> findAllPostByCategory(String category) {
 
+        List<Post> posts = postRepository
+                .findAllPostByCategory_Name(category);
 
+        if (posts.isEmpty()) {
+            throw new AppException(ErrorCode.POST_IS_EMPTY);
+        }
 
-
-
+        return posts.stream()
+                .map(postMapper::toResponse)
+                .toList();
+    }
 
 
 }

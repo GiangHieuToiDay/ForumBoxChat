@@ -17,7 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,22 +41,49 @@ public class BoxChatServiceImpl implements BoxChatService {
                 .toList();
     }
 
+//    @Override
+//    public BoxChatDtoResponse createBoxChat(BoxChatDtoRequest dto) {
+//
+//        String type = dto.getType().name();
+//
+//        BoxChat boxChat = boxChatMapper.toEntity(dto);
+//
+//        String idRaw = SecurityContextHolder.getContext().getAuthentication().getName();
+//        UUID uuid = UUID.fromString(idRaw);
+//        User user = userRepository.findById(uuid)
+//                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+//
+//
+//
+//        boxChat.setCreatedBy(user);
+//        bcRepository.save(boxChat);
+//
+//        return boxChatMapper.toResponse(boxChat);
+//    }
+
     @Override
     public BoxChatDtoResponse createBoxChat(BoxChatDtoRequest dto) {
-
-        String type = dto.getType().name();
-
-        BoxChat boxChat = boxChatMapper.toEntity(dto);
-
+        // 1. Lấy User hiện tại (người đang đăng nhập)
         String idRaw = SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID uuid = UUID.fromString(idRaw);
-        User user = userRepository.findById(uuid)
+        UUID currentUserId = UUID.fromString(idRaw);
+
+        // 2. LOGIC QUAN TRỌNG: Nếu là chat PRIVATE, hãy kiểm tra xem đã có Box chưa
+        if (dto.getType() == BoxChatType.PRIVATE && dto.getTargetUserId() != null) {
+            Optional<BoxChat> existingBox = bcRepository.findPrivateBox(currentUserId, dto.getTargetUserId());
+
+            if (existingBox.isPresent()) {
+                log.info("Tìm thấy Box cũ, không tạo mới!");
+                return boxChatMapper.toResponse(existingBox.get());
+            }
+        }
+
+        // 3. Nếu chưa có (hoặc là chat GROUP) thì mới tạo mới như cũ
+        BoxChat boxChat = boxChatMapper.toEntity(dto);
+        User currentUser = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-
-
-        boxChat.setCreatedBy(user);
-        bcRepository.save(boxChat);
+        boxChat.setCreatedBy(currentUser);
+        boxChat = bcRepository.save(boxChat);
 
         return boxChatMapper.toResponse(boxChat);
     }
@@ -68,6 +97,28 @@ public class BoxChatServiceImpl implements BoxChatService {
 
         boxChat.setName(boxChatDtoRequest.getName());
         return boxChatMapper.toResponse(boxChat);
+    }
+
+    @Override
+    public List<BoxChatDtoResponse> findAllBoxChat() {
+
+        UUID userId = UUID.fromString(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        );
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<BoxChat> boxChats = bcRepository.findByCreatedBy(user);
+
+        if(boxChats.isEmpty()){
+            return new ArrayList<>();
+        }
+        System.out.println(boxChats);
+
+        return boxChats.stream()
+                .map(boxChatMapper :: toResponse)
+                .toList();
     }
 
     @Override

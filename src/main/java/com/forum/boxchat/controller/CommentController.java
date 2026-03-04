@@ -23,7 +23,7 @@ public class CommentController {
         return  ResponseEntity.ok(commentService.findByPost_Id(postId));
     }
 
-    @PreAuthorize("hasRole('USER') and hasRole('VERIFIED')")
+//    @PreAuthorize("(hasRole('USER') or hasRole('ADMIN'))")
     @PostMapping
     public ResponseEntity<CommentDtoResponse> addComment(@RequestBody CommentDtoRequest commentDtoRequest){
         return ResponseEntity.ok(commentService.createComment(commentDtoRequest));

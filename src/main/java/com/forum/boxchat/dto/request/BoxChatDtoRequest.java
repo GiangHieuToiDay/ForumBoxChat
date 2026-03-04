@@ -18,9 +18,9 @@ public class BoxChatDtoRequest {
     private String name;
 
     @NotNull( message = "Type can not null")
-    @NotEmpty( message = "Type can not empty")
-    @NotBlank( message = "Type can not blank")
     private BoxChatType type;
+
+    private UUID targetUserId;
 
 
 }

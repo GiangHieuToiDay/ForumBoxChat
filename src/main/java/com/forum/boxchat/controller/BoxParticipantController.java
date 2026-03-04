@@ -13,60 +13,52 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/box-participant")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class BoxParticipantController {
 
-    private final BoxParticipantService boxParticipantService;
+        private final BoxParticipantService boxParticipantService;
 
-    @GetMapping("/box/{boxId}")
-    public ResponseEntity<List<BoxParticipantDtoResponse>> getByBoxId(
-            @PathVariable int boxId
-    ) {
-        return ResponseEntity.ok(boxParticipantService.findByBoxId(boxId));
-    }
+        @GetMapping("/box/{boxId}")
+        public ResponseEntity<List<BoxParticipantDtoResponse>> getByBoxId(
+                        @PathVariable int boxId) {
+                return ResponseEntity.ok(boxParticipantService.findByBoxId(boxId));
+        }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BoxParticipantDtoResponse>> getByUserId(
-            @PathVariable UUID userId
-    ) {
-        return ResponseEntity.ok(boxParticipantService.findByUserId(userId));
-    }
+        @GetMapping("/user/{userId}")
+        public ResponseEntity<List<BoxParticipantDtoResponse>> getByUserId(
+                        @PathVariable UUID userId) {
+                return ResponseEntity.ok(boxParticipantService.findByUserId(userId));
+        }
 
-    @PostMapping("/add")
-    public ResponseEntity<BoxParticipantDtoResponse> addUserToBox(
-            @RequestBody BoxParticipantDtoRequest request
-    ) {
-        return new ResponseEntity<>(
-                boxParticipantService.addUserToBox(request),
-                HttpStatus.CREATED
-        );
-    }
+        @PostMapping("/add")
+        public ResponseEntity<BoxParticipantDtoResponse> addUserToBox(
+                        @RequestBody BoxParticipantDtoRequest request) {
+                return new ResponseEntity<>(
+                                boxParticipantService.addUserToBox(request),
+                                HttpStatus.CREATED);
+        }
 
-    @PostMapping
-    public ResponseEntity<BoxParticipantDtoResponse> create(
-            @RequestBody BoxParticipantDtoRequest request
-    ) {
-        return new ResponseEntity<>(
-                boxParticipantService.create(request),
-                HttpStatus.CREATED
-        );
-    }
+        @PostMapping
+        public ResponseEntity<BoxParticipantDtoResponse> create(
+                        @RequestBody BoxParticipantDtoRequest request) {
+                return new ResponseEntity<>(
+                                boxParticipantService.create(request),
+                                HttpStatus.CREATED);
+        }
 
+        @DeleteMapping("/remove")
+        public ResponseEntity<Void> removeUserFromBox(
+                        @RequestParam int boxId,
+                        @RequestParam UUID userId) {
+                boxParticipantService.removeUserFromBox(boxId, userId);
+                return ResponseEntity.noContent().build();
+        }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity<Void> removeUserFromBox(
-            @RequestParam int boxId,
-            @RequestParam UUID userId
-    ) {
-        boxParticipantService.removeUserFromBox(boxId, userId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(
-            @PathVariable Integer id
-    ) {
-        boxParticipantService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> deleteById(
+                        @PathVariable Integer id) {
+                boxParticipantService.delete(id);
+                return ResponseEntity.noContent().build();
+        }
 }

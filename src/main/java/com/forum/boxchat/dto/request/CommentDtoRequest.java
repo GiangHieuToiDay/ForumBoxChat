@@ -13,7 +13,7 @@ public class CommentDtoRequest {
     @Size(max = 255)
     private String content;
 
-    @NotNull
+    @NotNull(message = "Post ID is required")
     private int postId;
 }
 

@@ -2,16 +2,15 @@ package com.forum.boxchat.model.entity;
 
 import com.forum.boxchat.model.enums.BoxChatType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "box_chat")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoxChat {

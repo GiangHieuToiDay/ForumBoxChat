@@ -23,7 +23,7 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllPost());
     }
 
-    @PreAuthorize("hasRole('USER') and hasRole('VERIFIED')")
+//    @PreAuthorize("hasRole('USER') and hasRole('VERIFIED')")
     @PostMapping
     public ResponseEntity<PostDtoResponse> addPost(@RequestBody PostDtoRequest postDtoRequest){
         return ResponseEntity.ok(postService.createPost(postDtoRequest));
@@ -45,6 +45,11 @@ public class PostController {
     @GetMapping("/title")
     public ResponseEntity<List<PostDtoResponse>> getAllPostsByTitle(@RequestParam String title){
         return ResponseEntity.ok(postService.findPostByTitle(title));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<PostDtoResponse>> getAllPostsByCategory(@RequestParam String category){
+        return ResponseEntity.ok(postService.findAllPostByCategory(category));
     }
 
 

@@ -7,16 +7,16 @@ import com.forum.boxchat.model.entity.BoxChat;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper( componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface BoxChatMapper {
 
-        @Mapping(target = "createdBy", source = "createdBy.id")
-        BoxChatDtoResponse toResponse(BoxChat boxChat);
+    @Mapping(target = "createdBy", source = "createdBy.id")
+    BoxChatDtoResponse toResponse(BoxChat boxChat);
 
-        @Mapping(target = "createdBy", ignore = true)
-        BoxChat toEntity(BoxChatDtoRequest dto);
-
-
+    @Mapping(target = "id", ignore = true) // Luôn ignore ID khi tạo mới từ DTO
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "participants", ignore = true)
+    BoxChat toEntity(BoxChatDtoRequest dto);
 
 
 }

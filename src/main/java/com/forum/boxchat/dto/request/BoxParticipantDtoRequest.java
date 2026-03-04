@@ -10,14 +10,10 @@ import java.util.UUID;
 @Data
 public class BoxParticipantDtoRequest {
 
-    @NotBlank
     @NotNull
-    @NotEmpty
     private Integer boxChatId;
 
-    @NotBlank
     @NotNull
-    @NotEmpty
     private UUID userId;
 
 

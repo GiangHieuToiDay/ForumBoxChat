@@ -23,6 +23,16 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
 
+        //Chuyển các tin nhắn thông thường thành dạng stomp để đọc được các header: author
+        // stomp là viết tắt của Simple text orientated messaging protocol
+        // => giao thức nhắn tin đơn giaản chạy đè lên trên over giao thức web socket
+        // web socket => liên kết giữa trình duyệt và sever
+        // stomp => ngôn ngữ mà 2 bên (cilent, sever) dùng để nói chuyện
+        //Giao thức STOMP có các thông tin quan trọng nằm trong Header mà một tin nhắn thường không có. Dùng StompHeaderAccessor, bạn có thể lấy được:
+        //Session ID: accessor.getSessionId() (ID của kết nối hiện tại).
+        //User: accessor.getUser() (Thông tin người dùng đã được xác thực).
+        //Destination: accessor.getDestination() (Tin nhắn này đang gửi đến đâu, ví dụ: /topic/messages).
+        //Command: accessor.getCommand() (Lệnh STOMP là gì: CONNECT, SEND, SUBSCRIBE, DISCONNECT...).
         StompHeaderAccessor accessor =
                 MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
