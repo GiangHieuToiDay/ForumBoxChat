@@ -109,7 +109,7 @@ public class BoxChatServiceImpl implements BoxChatService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<BoxChat> boxChats = bcRepository.findByCreatedBy(user);
+        List<BoxChat> boxChats = bcRepository.findAllByUserParticipating(user);
 
         if(boxChats.isEmpty()){
             return new ArrayList<>();

@@ -23,6 +23,13 @@ public interface BoxChatRepository extends JpaRepository<BoxChat,Integer> {
             "AND p2.user.id = :user2Id")
     Optional<BoxChat> findPrivateBox(@Param("user1Id") UUID user1Id, @Param("user2Id") UUID user2Id);
 
+    @Query("""
+       SELECT DISTINCT bp.boxChat
+       FROM BoxParticipant bp
+       WHERE bp.user = :user
+       """)
+    List<BoxChat> findAllByUserParticipating(@Param("user") User user);
+
 
     List<BoxChat> findByCreatedBy(User createdBy);
 

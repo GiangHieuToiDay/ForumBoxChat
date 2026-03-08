@@ -12,6 +12,7 @@ public interface PostMapper {
     @Mapping(source = "user.name", target = "authorName")
     @Mapping(source = "user.id", target = "authorId")
     @Mapping(source = "category.name", target = "categoryName")
+    @Mapping(source = "imageUrl", target = "imageUrl")
     @Mapping(target = "commentCount", expression = "java(post.getComments() != null ? post.getComments().size() : 0)")
     PostDtoResponse toResponse(Post post);
 
@@ -22,5 +23,7 @@ public interface PostMapper {
     @Mapping(target = "comments", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updateAt", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true)
+    @Mapping(target = "imagePublicId", ignore = true)
     Post toEntity(PostDtoRequest postDtoRequest);
 }

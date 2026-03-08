@@ -45,3 +45,8 @@ jwt:
 
 app:
   baseurl: http://192.168.1.177:8080
+
+cloudinary:
+  cloud-name: dfvq2ckbi
+  api-key: 283211323636595
+  api-secret: pGxOZ7KcTVk76ETXvGsiWgPYtLQ

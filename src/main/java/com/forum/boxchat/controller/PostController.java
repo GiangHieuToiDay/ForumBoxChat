@@ -5,9 +5,12 @@ import com.forum.boxchat.dto.request.PostDtoRequest;
 import com.forum.boxchat.dto.respone.PostDtoResponse;
 import com.forum.boxchat.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,15 +21,33 @@ public class PostController {
 
     public final PostService postService;
 
+//    @GetMapping
+//    public ResponseEntity<List<PostDtoResponse>> getAllPosts(){
+//        return ResponseEntity.ok(postService.findAllPost());
+//    }
+
     @GetMapping
-    public ResponseEntity<List<PostDtoResponse>> getAllPosts(){
-        return ResponseEntity.ok(postService.findAllPost());
+    public ResponseEntity<Page<PostDtoResponse>> getAllPost(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return ResponseEntity.ok(postService.findAllPost(page, size));
     }
 
 //    @PreAuthorize("hasRole('USER') and hasRole('VERIFIED')")
-    @PostMapping
-    public ResponseEntity<PostDtoResponse> addPost(@RequestBody PostDtoRequest postDtoRequest){
-        return ResponseEntity.ok(postService.createPost(postDtoRequest));
+//    @PostMapping
+//    public ResponseEntity<PostDtoResponse> addPost(@RequestBody PostDtoRequest postDtoRequest){
+//        return ResponseEntity.ok(postService.createPost(postDtoRequest));
+//    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PostDtoResponse> addPost(
+            @ModelAttribute PostDtoRequest postDtoRequest,
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) {
+        return ResponseEntity.ok(
+                postService.createPost(postDtoRequest, image)
+        );
     }
 
     @PreAuthorize("hasRole('USER') and hasRole('VERIFIED')")
@@ -48,8 +69,14 @@ public class PostController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<PostDtoResponse>> getAllPostsByCategory(@RequestParam String category){
-        return ResponseEntity.ok(postService.findAllPostByCategory(category));
+    public ResponseEntity<Page<PostDtoResponse>> getAllPostsByCategory(
+            @RequestParam String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        return ResponseEntity.ok(
+                postService.findAllPostByCategory(category, page, size)
+        );
     }
 
 

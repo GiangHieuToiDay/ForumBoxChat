@@ -39,6 +39,12 @@ public class Post {
     @Column(name = "slug", nullable = false, length = 100)
     private String slug;
 
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
+    @Column(name = "image_public_id", length = 200)
+    private String imagePublicId;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

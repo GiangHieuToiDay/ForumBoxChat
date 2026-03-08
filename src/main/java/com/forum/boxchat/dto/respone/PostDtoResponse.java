@@ -17,4 +17,5 @@ public class PostDtoResponse {
     private String categoryName;
     private LocalDateTime createdAt;
     private int commentCount;
+    private String imageUrl;
 }
